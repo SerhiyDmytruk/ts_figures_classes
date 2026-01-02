@@ -4,88 +4,76 @@ export enum Shape {
   Rectangle = 'rectangle',
 }
 
-export enum Color {
-  Red = 'red',
-  Green = 'green',
-  Blue = 'blue',
-}
+export type Color = 'red' | 'green' | 'blue';
 
 export interface Figure {
-  shape: Shape,
-  color: Color,
+  shape: Shape;
+  color: Color;
+  getArea(): number;
 }
 
 export class Triangle implements Figure {
-  public area: number;
-
   constructor(
-    public shape: Shape.Triangle,
     public color: Color,
     public a: number,
     public b: number,
-    public c: number
-  ){
+    public c: number,
+    public shape: Shape.Triangle,
+  ) {
     if (a <= 0 || b <= 0 || c <= 0) {
-      throw new Error('Sides must be positive numbers');
+      throw new Error(`Sides ${a}, ${b} and ${c} can't form a triangle`);
     }
+
     if (a + b <= c || a + c <= b || b + c <= a) {
-      throw new Error('Invalid triangle sides');
+      throw new Error(`Sides ${a}, ${b} and ${c} can't form a triangle`);
     }
-
-    const s: number = (a + b + c) / 2
-
-    this.area = Math.sqrt( s * (s - a) * (s - b) * (s - c));
   }
 
   getArea(): number {
-    return Math.floor(this.area * 100) / 100 ;
+    const s: number = (this.a + this.b + this.c) / 2;
+    const area = Math.sqrt(s * (s - this.a) * (s - this.b) * (s - this.c));
+
+    return Math.floor(area * 100) / 100;
   }
 }
 
 export class Circle implements Figure {
-  public area: number;
-
   constructor(
-    public shape: Shape.Circle,
     public color: Color,
     public radius: number,
-  ){
-    if (radius <= 0) {
-      throw new Error('Radius should be more then 0');
+    public shape: Shape.Circle,
+  ) {
+    if (radius <= 0 || radius === null) {
+      throw new Error('Problem with Radius, less 0 or absent pls check again');
     }
-
-    this.area = Math.PI * radius * radius;
   }
 
   getArea(): number {
-    return Math.floor(this.area * 100) / 100 ;
+    const area = Math.PI * Math.pow(this.radius, 2);
+
+    return Math.floor(area * 100) / 100;
   }
 }
 
 export class Rectangle implements Figure {
-  public area: number;
-
   constructor(
-    public shape: Shape.Rectangle,
     public color: Color,
     public width: number,
-    public height: number
-  ){
+    public height: number,
+    public shape: Shape.Rectangle,
+  ) {
     if (width <= 0 || height <= 0) {
-      throw new Error('Sides must be positive numbers');
+      throw new Error('Values must be greater than 0');
     }
-
-
-    this.area = width * height;
   }
 
   getArea(): number {
-    return Math.floor(this.area * 100) / 100 ;
+    const area = this.width * this.height;
+
+    return Math.floor(area * 100) / 100;
   }
 }
 
-export function getInfo(figure): string {
-  const { color, shape } = this;
-
-  return `A ${color} ${shape} - ${typeof figure}` ;
+export function getInfo(figure: Figure): string {
+  return `A ${figure.color} ${figure.shape} - ${figure.getArea}`;
 }
