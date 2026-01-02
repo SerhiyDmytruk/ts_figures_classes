@@ -38,7 +38,7 @@ export class Triangle implements Figure {
   }
 
   getArea(): number {
-    return this.area;
+    return Math.floor(this.area * 100) / 100 ;
   }
 }
 
@@ -54,11 +54,11 @@ export class Circle implements Figure {
       throw new Error('Radius should be more then 0');
     }
 
-    this.area = Math.PI * radius;
+    this.area = Math.PI * radius * radius;
   }
 
   getArea(): number {
-    return this.area
+    return Math.floor(this.area * 100) / 100 ;
   }
 }
 
@@ -80,7 +80,7 @@ export class Rectangle implements Figure {
   }
 
   getArea(): number {
-    return this.area
+    return Math.floor(this.area * 100) / 100 ;
   }
 }
 
