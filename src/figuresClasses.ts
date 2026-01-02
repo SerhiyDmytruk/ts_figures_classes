@@ -1,9 +1,4 @@
-export enum Shape {
-  Triangle = 'triangle',
-  Circle = 'circle',
-  Rectangle = 'rectangle',
-}
-
+export type Shape = 'triangle' | 'circle' | 'rectangle';
 export type Color = 'red' | 'green' | 'blue';
 
 export interface Figure {
@@ -18,7 +13,7 @@ export class Triangle implements Figure {
     public a: number,
     public b: number,
     public c: number,
-    public shape: Shape.Triangle,
+    public shape: Shape = 'triangle',
   ) {
     if (a <= 0 || b <= 0 || c <= 0) {
       throw new Error(`Sides ${a}, ${b} and ${c} can't form a triangle`);
@@ -41,7 +36,7 @@ export class Circle implements Figure {
   constructor(
     public color: Color,
     public radius: number,
-    public shape: Shape.Circle,
+    public shape: Shape = 'circle',
   ) {
     if (radius <= 0 || radius === null) {
       throw new Error('Problem with Radius, less 0 or absent pls check again');
@@ -60,7 +55,7 @@ export class Rectangle implements Figure {
     public color: Color,
     public width: number,
     public height: number,
-    public shape: Shape.Rectangle,
+    public shape: Shape = 'rectangle',
   ) {
     if (width <= 0 || height <= 0) {
       throw new Error('Values must be greater than 0');
@@ -75,5 +70,5 @@ export class Rectangle implements Figure {
 }
 
 export function getInfo(figure: Figure): string {
-  return `A ${figure.color} ${figure.shape} - ${figure.getArea}`;
+  return `A ${figure.color} ${figure.shape} - ${figure.getArea()}`;
 }
